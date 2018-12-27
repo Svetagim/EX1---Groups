@@ -14,18 +14,22 @@ module.exports = {
     },
     async setGroupScore(req, res, next) {
         const {Name = null, Points = null} = req.body;
-        const result = await Group.updateOne({Name},{Points});
-        if (result) {
-            if (result.nModified !=0){
-                console.log('modified');
-                res.json({success:true});
-            }
-            else{
-                console.log('no changes made');
-                res.json({success:false});
+        try{
+            const result = await Group.updateOne({Name},{Points},{ runValidators: true });
+            if (result) {
+                if (result.nModified !=0){
+                    console.log('modified');
+                    res.json({success:true});
+                }
+                else{
+                    console.log('no changes made');
+                    res.json({success:false});
+                }
             }
         }
-        else res.status(404).send('not found');
+        catch(error){
+            res.status(404).send('error');
+        }
     },
     async groupsByScoreAndWin(req, res, next) {
         const {points = null, wins = null} = req.body;
@@ -38,7 +42,6 @@ module.exports = {
         },
         async getTopGroups(req, res, next) {
             const top = parseInt(req.params["top"]);
-            console.log(top)
             if (!!top && top>0){
                 const result = await Group.find({}).sort({Points:-1}).limit(parseInt(top));
                 if (result){

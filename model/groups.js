@@ -19,13 +19,10 @@ const group = new mongoose.Schema({
 //validation
 group.path('Points').validate(
     (val) => {
-        console.log(`\nvalidation ${val}`)
         let iVal = Number(val)
-        console.log(iVal);
-        return iVal > 0;
-    }, "Score cant be negetive");
-
+        return iVal >= 0;
+    },console.log(`Score can't be negative`));
+    
 //model
 const Group = mongoose.model('Group', group);
 module.exports = Group;
-
