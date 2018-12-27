@@ -35,5 +35,18 @@ module.exports = {
             res.json(result);
         }
         else res.status(404).send('not found');
+        },
+        async getTopGroups(req, res, next) {
+            const top = parseInt(req.params["top"]);
+            console.log(top)
+            if (!!top && top>0){
+                const result = await Group.find({}).sort({Points:-1}).limit(parseInt(top));
+                if (result){
+                    res.json(result);
+                } 
+            }
+            else res.status(404).send('wrong parameter');
         }
 };
+
+

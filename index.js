@@ -15,6 +15,8 @@ app.use(express.urlencoded({extended: true}));
 app.get('/allgroups', asyncWrapper(ctrl.getAllGroups));
 app.post('/setscore', asyncWrapper(ctrl.setGroupScore));
 app.put('/scoresandwins', asyncWrapper(ctrl.groupsByScoreAndWin));
+app.get('/gettop/:top', asyncWrapper(ctrl.getTopGroups));
+
 
 app.listen(port,
     () => console.log('Express server ready for requests on: ', port));
