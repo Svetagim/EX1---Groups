@@ -49,6 +49,9 @@ module.exports = {
                 } 
             }
             else res.status(404).send('wrong parameter');
+        },
+        async falldown(req, res, next) {
+            res.status(404).send('not found');
         }
 };
 
